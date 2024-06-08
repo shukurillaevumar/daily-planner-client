@@ -1,0 +1,8 @@
+.appFormCheckboxInput{
+    display: flex;
+    align-items: center;
+}
+input[type="checkbox"]{
+    width: 1.5rem;
+    height: 1.5rem;
+}

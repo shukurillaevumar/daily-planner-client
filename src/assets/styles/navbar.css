@@ -1,0 +1,23 @@
+.app-navbar{
+  ul{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      padding-right: 1rem;
+  }
+
+    .brand {
+        font-size: 2rem;
+
+    }
+    .brand a {
+        color: white;
+    }
+    .nav-item{
+        font-size: 1.2rem;
+    }
+    .nav-item a {
+        color: white;
+    }
+}

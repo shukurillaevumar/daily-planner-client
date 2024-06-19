@@ -2,23 +2,49 @@ import Plan from "../components/Plan.jsx";
 import "../assets/styles/home.css";
 import AppFormInputText from "../components/form/AppFormInputText.jsx";
 import AppFormDataTime from "../components/form/AppFormDataTime.jsx";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Home() {
   const [planData, setPlanData] = useState([
-    {
-      id: 1,
-      title: "Do the dishes",
-      deadline: 1721478001000,
-      isCompleted: true,
-    },
-    {
-      id: 2,
-      title: "Read a book for 120 minutes",
-      deadline: 1724132401000,
-      isCompleted: false,
-    },
+    // {
+    //   id: 1,
+    //   title: "Do the dishes",
+    //   deadline: 1721478001000,
+    //   isCompleted: true,
+    // },
+    // {
+    //   id: 2,
+    //   title: "Read a book for 120 minutes",
+    //   deadline: 1724132401000,
+    //   isCompleted: false,
+    // },
   ]);
+
+  useEffect(() => {
+    sendRequest("plans", "GET");
+  }, []);
+
+  const sendRequest = (url, method = "POST", data) => {
+    const baseUrl = "https://daily-planner-1dz0.onrender.com/";
+    fetch(baseUrl + url, {
+      method: method,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("auth-token"),
+      },
+      body: JSON.stringify(data),
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        if (!data || Array.isArray(data)) {
+          setPlanData(data);
+        }
+      });
+  };
+
   const [title, setTitle] = useState("");
   const [deadline, setDeadline] = useState(0);
   const [errors, setErrors] = useState([]);

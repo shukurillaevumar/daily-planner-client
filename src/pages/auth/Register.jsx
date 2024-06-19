@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../assets/styles/auth.css";
 import { useState } from "react";
 
 function Register() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const sendRequest = (url, method = "POST", data) => {
     const baseUrl = "https://daily-planner-1dz0.onrender.com/";
     fetch(baseUrl + url, {
@@ -20,7 +20,10 @@ function Register() {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
+        if (data.status && data.authToken) {
+          localStorage.setItem("authToken", data.authToken);
+          return navigate("/");
+        }
       });
   };
 
